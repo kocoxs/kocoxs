@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getProducts } from '../actions/products'
-import { addProducToOrder } from '../actions/order'
+import { addProducToOrder, removeProducfromOrder, edditProducInOrder, discardOrder } from '../actions/order'
 import  * as SC  from './StyledComponents'
 
 class Products extends React.Component {
-    state = {}
+    state = {
+    }
 
     componentDidMount = async () =>{
         this.props.dispatch(getProducts())
@@ -19,21 +20,45 @@ class Products extends React.Component {
     }
 
     addToOrder = (product) => {
-        console.log("Cantidad es: ", this.state[`cantidad-${product.id}`])
-        product.qty = this.state[`cantidad-${product.id}`]
+        const qty = parseInt(this.state[`cantidad-${product.id}`],10)
+
+        if(isNaN(qty))
+            return alert("Ingresa un Numero")
+
         this.props.dispatch (addProducToOrder({
             ...product,
-            qty: this.state[`cantidad-${product.id}`]
+            qty 
         }))
 
         this.setState({
             [`cantidad-${product.id}`]: 0
-        })
+        }) 
+    }
+
+    editQuantity = (product) =>{
+        const qty = parseInt(this[`countEdit${product.id}`].value, 10)
+        if(isNaN(qty))
+            return alert("Ingresa un Numero")
+
+        this.props.dispatch (edditProducInOrder({
+            ...product,
+            qty
+        }))
+        this[`countEdit${product.id}`].value = ''
+    }
+
+    removeFromOrder = (product) => {
+        this.props.dispatch (removeProducfromOrder(product))
+    }
+
+    discard = () => {
+        this.props.dispatch (discardOrder())
     }
 
     render() {
+        let total = 0;
         return (
-        <SC.DivContainer>
+        <SC.DivContainer fllexDirection="column" fullWidth>
             <SC.DivBlock>    
                 <h1>Products</h1>
                 <SC.ListContainer>
@@ -69,7 +94,7 @@ class Products extends React.Component {
                 <SC.DivRowHorizontal>
                     <h1>Order</h1>
                     <SC.DivRowHorizontal justifyContent="flex-end">
-                        <SC.ButtonBtn color="#ff7272" margin="0px 15px">
+                        <SC.ButtonBtn color="#ff7272" margin="0px 15px" onClick={this.discard}>
                             Discard
                         </SC.ButtonBtn>
                         <SC.ButtonBtn margin="0px 15px">
@@ -79,7 +104,9 @@ class Products extends React.Component {
                 </SC.DivRowHorizontal>
                 <SC.ListContainer>
                 {
-                    this.props.order && this.props.order.products.length > 0 ? this.props.order.products.map((product)=> 
+                    this.props.order && this.props.order.products ? this.props.order.products.map((product)=> {
+                        total += product.price * product.qty
+                        return (
                         <SC.List key={product.id}>
                             <SC.ListSection flexGrow="1">
                                 <img src={`http://localhost:3001/products/${product.icon}`} alt={product.name}/>
@@ -90,13 +117,32 @@ class Products extends React.Component {
                             </SC.ListSection>
                             <SC.ListSection flexGrow="4" justifyContent="space-evenly">
                                 <label>Quantity: {product.qty}</label>
-                                <SC.ButtonBtn color="#ff7272">
+                                <SC.Input 
+                                    type="text" 
+                                    placeholder="Edit Quantity"
+                                    ref={input => this[`countEdit${product.id}`] = input}
+                                />
+                                <SC.ButtonBtn onClick={() => this.editQuantity(product)}>
+                                    Edit
+                                </SC.ButtonBtn>
+                                <SC.ButtonBtn color="#ff7272" onClick={() => this.removeFromOrder(product)}>
                                     Remove
                                 </SC.ButtonBtn>
+                                <label>
+                                    Amount: ${ product.price * product.qty } 
+                                </label>
                             </SC.ListSection> 
                         </SC.List>
+                        )
+                    }
+
                     ) : undefined
                 }
+                    <SC.List>
+                        <SC.ListSection flexGrow="1" justifyContent="flex-end">
+                            <label>Total: ${total}</label>
+                        </SC.ListSection>
+                    </SC.List>
                 </SC.ListContainer>
             </SC.DivBlock>
         </SC.DivContainer>

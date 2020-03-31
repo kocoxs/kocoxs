@@ -2,13 +2,14 @@ import styled from 'styled-components'
 
 export const DivContainer = styled.div`
     width:100%;
-    height:calc(100vh);
+    min-height:calc(100vh);
     display:flex;
     justify-content: center;
-    align-items: center;
+    align-items: ${props => props.fullWidth ? "normal": "center"} ;
     align-content: center;
     font-family: sans-serif;
     background-color: #eaeaea;
+    flex-direction: ${props => props.fllexDirection || "row"};
 `
 
 export const FormLogin = styled.form`
@@ -66,12 +67,15 @@ export const ButtonBtn = styled.button`
 export const DivBlock = styled.div`
     height:${props => props.height || "80%"};
     background: white;
-    flex-grow:1;
+    flex:1;
     margin:15px; 
     border-radius:3px;
     padding:15px;
     flex-direction:column;
-    flex-basis: 50%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+
 `
 export const ListContainer = styled.ul`
     padding-left:0px;
