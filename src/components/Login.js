@@ -1,14 +1,22 @@
 import React from 'react'
-import { useHistory } from "react-router-dom";
-import userApi from '../utils/api/users.js'
+import { DivContainer, FormLogin, DivRow, Input, ButtonBtn } from './StyledComponents'
+import { connect } from 'react-redux'
+import { login } from '../actions/users'
+import _api from '../utils/api/config'
 
-export default class Login extends React.Component {
+class Login extends React.Component {
     state = {
         email: '',
         password: '',
         loggedIn: false
+    } 
+    componentDidMount = () => {
+        if(this.props.users && this.props.users.token){
+          _api.defaults.headers.common = {'Authorization': `Bearer ${this.props.users.token}`}
+          this.props.history.push('/products')
+        }
     }
-    
+
     handleChange = (event) => {
         this.setState({
           [event.target.name]: event.target.value
@@ -17,47 +25,59 @@ export default class Login extends React.Component {
 
     handleSubmit = async (event) => {
         event.preventDefault()
-        const resp = await userApi({ ...this.state })
-        
-        if(resp.error)
-            return console.log(resp.error)
-        
-        this.props.history.push('/products')
+        this.props.dispatch(login(this.state.email, this.state.password))
+        .then(() => {
+            this.props.history.push('/products')
+        })
+        .catch((error)=> console.log("ERROR: ", error))
     }
 
-    render() {
-      return (
+    render() {    
+        return (
         <div>
-            <form onSubmit={this.handleSubmit}>
-                <div>
-                    <label>Email</label>
-                    <input 
-                        type="text" 
-                        id="email"
-                        name="email"
-                        autoComplete="off"
-                        value={this.state.email}
-                        onChange={this.handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Password</label>
-                    <input 
-                        type="password" 
-                        id="password"
-                        name="password"
-                        autoComplete="off"
-                        value={this.state.password}
-                        onChange={this.handleChange}
-                    />
-                </div>
-                <div>
-                    <button type="submit">
-                        Login
-                    </button>
-                </div>
-            </form>
+            <DivContainer>
+                <FormLogin onSubmit={this.handleSubmit}>
+                    <DivRow>
+                        <h1>Login</h1>
+                    </DivRow>
+                    <DivRow>
+                        <label>Email</label>
+                        <Input 
+                            type="text" 
+                            id="email"
+                            name="email"
+                            autoComplete="off"
+                            value={this.state.email}
+                            onChange={this.handleChange}
+                        />
+                    </DivRow>
+                    <DivRow>
+                        <label>Password</label>
+                        <Input 
+                            type="password" 
+                            id="password"
+                            name="password"
+                            autoComplete="off"
+                            value={this.state.password}
+                            onChange={this.handleChange}
+                        />
+                    </DivRow>
+                    <DivRow>
+                        <ButtonBtn type="submit">
+                            Login
+                        </ButtonBtn>
+                    </DivRow>
+                </FormLogin>
+            </DivContainer>
         </div>
       )
     }
-  }
+}
+
+function mapStateToProps ({users}){
+    return {
+      users
+    }
+}
+
+export default connect(mapStateToProps)(Login)

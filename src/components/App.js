@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+
 import Login from './Login'
 import Products from './Products'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 class App extends Component {
-
-  
   render() {
     return (
       <Router>
@@ -16,4 +16,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default connect()(App)
