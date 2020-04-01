@@ -83,8 +83,8 @@ export const ListContainer = styled.ul`
 
 export const List = styled.li`
     list-style:none;
-    display:flex;
-    flex-direction: row;
+    display:${props => props.hide || "flex"};
+    flex-direction: ${props => props.vertical ? 'column' : "row"}; 
     border: solid 1px #e0e0e0;
     padding: 15px;
     margin: 15px 0px;

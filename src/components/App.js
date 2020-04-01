@@ -9,6 +9,7 @@ import Detail from './Detail'
 import Admin from './Admin'
 import Orders from './Orders'
 import Products from './Products'
+import ProductsCreate from './ProductsCreate'
 
 class App extends Component {
   render() {
@@ -19,8 +20,10 @@ class App extends Component {
         <Route path='/tip' component={Tip} />
         <Route path='/detail' component={Detail} />
         <Route exact path='/admin' component={Admin} />
-        <Route path='/admin/orders' component={Orders} />
-        <Route path='/admin/products' component={Products} />
+        <Route exact path='/admin/orders' component={Orders} />
+        <Route exact path='/admin/products' component={Products} />
+        <Route exact path='/admin/products/create' component={ProductsCreate} />
+        <Route exact path='/admin/products/edit/:id' component={ProductsCreate} />
       </Router>
     )
   }

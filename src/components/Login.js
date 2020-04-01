@@ -36,9 +36,9 @@ class Login extends React.Component {
     }
 
     render() {    
-        if(this.props.users.user.Rol.id == 1)
+        if(this.props.users && this.props.users.user && this.props.users.user.Rol.id == 1)
             this.props.history.push('/admin')
-        if(this.props.users.user.Rol.id == 2) 
+        if(this.props.users && this.props.users.user && this.props.users.user.Rol.id == 2) 
             this.props.history.push('/products')
 
         return (

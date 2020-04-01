@@ -1,14 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getProducts } from '../actions/products'
+import { getProducts, deleteProduct } from '../actions/products'
 import { Link } from "react-router-dom";
 import  * as SC  from './StyledComponents'
 
 class Products extends React.Component {
 
     componentDidMount = () =>{
+        
         this.props.dispatch(getProducts())
-        .catch((error) => this.props.history.push('/'))
+         .catch ((error) => { this.props.history.push('/') })
+        
+    }
+
+    removeProduct = (product) => {
+        try {
+            this.props.dispatch(deleteProduct(product))
+        } catch (error) {
+            this.props.history.push('/')
+        }
     }
 
     render(){
@@ -25,9 +35,9 @@ class Products extends React.Component {
                                     <SC.Text><b>{product.name}</b></SC.Text>
                                     <SC.Text>${product.price}</SC.Text>
                                     <SC.ButtonBtn>
-                                        Edit
+                                        <Link to={`/admin/products/edit/${product.id}`}>Edit</Link>
                                     </SC.ButtonBtn>
-                                    <SC.ButtonBtn>
+                                    <SC.ButtonBtn onClick={() => this.removeProduct(product)}>
                                         Remove
                                     </SC.ButtonBtn>
                                 </SC.ListSection>
@@ -37,6 +47,11 @@ class Products extends React.Component {
                     </SC.ListContainer>
                     <SC.DivRowHorizontal>
                         <Link to="/admin">Menu</Link>
+                    </SC.DivRowHorizontal>
+                    <SC.DivRowHorizontal>
+                        <SC.ButtonBtn>
+                            <Link to="/admin/products/create">Create</Link>
+                        </SC.ButtonBtn>
                     </SC.DivRowHorizontal>
                 </SC.DivBlock>
             </SC.DivContainer>
