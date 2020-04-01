@@ -21,7 +21,7 @@ export async function removeProduct (product) {
 
 export async function createProduct (product) {
     try {
-        debugger
+        
         let formData = new FormData()
 
         formData.append('icon', product.icon)
@@ -42,7 +42,7 @@ export async function createProduct (product) {
 
 export async function editProduct (product) {
     try {
-        debugger
+
         let formData = new FormData()
 
         if(product.icon)

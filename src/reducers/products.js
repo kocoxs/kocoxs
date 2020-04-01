@@ -7,7 +7,6 @@ export default function products (state = [], action) {
         case DELETE_PRODUCTS:
             return state.filter((p) => p.id != action.product.id)
         case ADD_PRODUCTS:
-            debugger
             return state.concat(action.product)
         case MODIFY_PRODUCTS:
             return state.map((item) => {

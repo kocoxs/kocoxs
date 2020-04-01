@@ -11,9 +11,7 @@ class Tip extends React.Component {
     }
 
     componentDidMount = () => {
-        
         this.props.dispatch(loadTips())
-        .catch((error) => this.props.history.push('/'))
     }
 
     selectTip = (tip) => {

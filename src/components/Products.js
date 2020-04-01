@@ -6,11 +6,8 @@ import  * as SC  from './StyledComponents'
 
 class Products extends React.Component {
 
-    componentDidMount = () =>{
-        
+    componentDidMount = () => {
         this.props.dispatch(getProducts())
-         .catch ((error) => { this.props.history.push('/') })
-        
     }
 
     removeProduct = (product) => {

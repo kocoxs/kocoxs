@@ -12,7 +12,6 @@ class Orders extends React.Component {
 
     componentDidMount = () => {
         this.props.dispatch(getOrders())
-        .catch((error) => this.props.history.push('/'))
     }
 
     render(){

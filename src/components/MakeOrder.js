@@ -10,7 +10,6 @@ class MakeOrder extends React.Component {
 
     componentDidMount = async () =>{
         this.props.dispatch(getProducts())
-        .catch((error) => this.props.history.push('/'))
     }
 
     handleChange = (event) => {

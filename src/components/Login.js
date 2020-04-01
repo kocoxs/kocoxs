@@ -2,7 +2,7 @@ import React from 'react'
 import { DivContainer, CenterBlock, DivRow, Input, ButtonBtn } from './StyledComponents'
 import { connect } from 'react-redux'
 import { login } from '../actions/users'
-import _api from '../utils/api/config'
+
 
 class Login extends React.Component {
     state = {
@@ -12,7 +12,6 @@ class Login extends React.Component {
     } 
     componentDidMount = () => {
         if(this.props.users && this.props.users.token){
-            _api.defaults.headers.common = {'Authorization': `Bearer ${this.props.users.token}`}
             if(this.props.users.user.Rol.id == 1)
                 this.props.history.push('/admin')
             if(this.props.users.user.Rol.id == 2) 
