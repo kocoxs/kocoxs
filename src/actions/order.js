@@ -1,7 +1,11 @@
+import { createOrder } from '../utils/api/order'
+
 export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 export const EDIT_PRODUCT = 'EDIT_PRODUCT'
 export const DISCARD_ORDER = 'DISCARD_ORDER'
+export const ASIGN_TIP = 'ASIGN_TIP'
+export const SAVE_ORDER = 'SAVE_ORDER'
 
 export function addProduct (order) {
     return {
@@ -27,6 +31,20 @@ export function editProduct (order) {
 export function discard(order = {}){
     return {
         type: DISCARD_ORDER,
+        order
+    }
+}
+
+export function asignTip(tip){
+    return {
+        type: ASIGN_TIP,
+        tip
+    }
+}
+
+export function saveOrder(order){
+    return {
+        type:SAVE_ORDER,
         order
     }
 }
@@ -57,4 +75,15 @@ export function discardOrder(){
     }
 }
 
+export function setTip(tip){
+    return (dispatch) => {
+        return dispatch(asignTip(tip))
+    }
+}
 
+export function savingOrder(order){
+    return (dispatch) => {
+        return createOrder(order)
+        .then(({result}) => dispatch(saveOrder(result)))
+    }
+}

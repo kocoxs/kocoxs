@@ -11,8 +11,7 @@ export const DivContainer = styled.div`
     background-color: #eaeaea;
     flex-direction: ${props => props.fllexDirection || "row"};
 `
-
-export const FormLogin = styled.form`
+export const CenterBlock = styled.div`
     display:flex;
     width:300px;
     height:auto;
@@ -53,7 +52,7 @@ export const Input = styled.input`
 `
 
 export const ButtonBtn = styled.button`
-    width: fit-content;
+    width: ${props => props.fullWidth ? "" : "fit-content"} ;
     display: block;
     padding: 7px 15px;
     border: none;
@@ -62,6 +61,7 @@ export const ButtonBtn = styled.button`
     border-radius: 3px;   
     margin: ${props => props.margin || "unset"};
     height: fit-content;
+    box-shadow: ${props => props.active === 'active' ? "0px 0px 3px 3px #0d4069" : "none"};
 `
 
 export const DivBlock = styled.div`

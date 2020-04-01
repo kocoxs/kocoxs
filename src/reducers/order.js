@@ -1,4 +1,4 @@
-import { ADD_PRODUCT, REMOVE_PRODUCT, EDIT_PRODUCT, DISCARD_ORDER } from '../actions/order'
+import { ADD_PRODUCT, REMOVE_PRODUCT, EDIT_PRODUCT, DISCARD_ORDER, ASIGN_TIP, SAVE_ORDER } from '../actions/order'
 
 export default function products (state = {}, action) {
     switch (action.type) {
@@ -24,6 +24,10 @@ export default function products (state = {}, action) {
             return orderEdit
         case DISCARD_ORDER:
             return {}
+        case ASIGN_TIP:
+            return { ...state, tipId: action.tip.id}
+        case SAVE_ORDER:
+            return {...state, ...action.order}
         default:
             return state
     }
