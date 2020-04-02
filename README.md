@@ -13,7 +13,7 @@ Create Order with bartender user bartender@gmail.com and pass 123456789 (you can
 
 2- run npm install
 
-3- run npm dev
+3- run npm start
 
 
 
