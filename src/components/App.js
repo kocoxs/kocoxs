@@ -12,6 +12,7 @@ import Admin from './Admin'
 import Orders from './Orders'
 import Products from './Products'
 import ProductsCreate from './ProductsCreate'
+import Logout from './Logout'
 
 class App extends Component {
   render() {
@@ -23,21 +24,19 @@ class App extends Component {
       if(users.user.RolId == 1){
         return (
           <Router>
-            <Route exact path='/' component={Login} />
+            <Logout />
             <Route exact path='/admin' component={Admin} />
             <Route exact path='/admin/orders' component={Orders} />
             <Route exact path='/admin/products' component={Products} />
             <Route exact path='/admin/products/create' component={ProductsCreate} />
             <Route exact path='/admin/products/edit/:id' component={ProductsCreate} />
-            <Route path="*">
-              <Redirect to={{ pathname: "/admin" }} />
-            </Route>
+            
           </Router>
         )
       }else if(users.user.RolId == 2){
         return (
           <Router>
-            <Route exact path='/' component={Login} />
+            <Logout />
             <Route exact path='/makeorder' component={MakeOrder} />
             <Route exact path='/tip' component={Tip} />
             <Route exact path='/detail' component={Detail} />

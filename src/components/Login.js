@@ -1,5 +1,5 @@
 import React from 'react'
-import { DivContainer, CenterBlock, DivRow, Input, ButtonBtn } from './StyledComponents'
+import { DivContainer, CenterBlock, DivRow, Input, ButtonBtn, Title, Label } from './StyledComponents'
 import { connect } from 'react-redux'
 import { login } from '../actions/users'
 
@@ -10,14 +10,7 @@ class Login extends React.Component {
         password: '',
         loggedIn: false
     } 
-    componentDidMount = () => {
-        if(this.props.users && this.props.users.token){
-            if(this.props.users.user.Rol.id == 1)
-                this.props.history.push('/admin')
-            if(this.props.users.user.Rol.id == 2) 
-                this.props.history.push('/makeorder')
-        }
-    }
+    componentDidMount = () => { }
 
     handleChange = (event) => {
         this.setState({
@@ -41,15 +34,14 @@ class Login extends React.Component {
             this.props.history.push('/products')
 
         return (
-        <div>
             <DivContainer>
                 <form onSubmit={this.handleSubmit}>
                     <CenterBlock>
                         <DivRow>
-                            <h1>Login</h1>
+                            <Title>Login</Title>
                         </DivRow>
                         <DivRow>
-                            <label>Email</label>
+                            <Label>Email</Label>
                             <Input 
                                 type="text" 
                                 id="email"
@@ -60,7 +52,7 @@ class Login extends React.Component {
                             />
                         </DivRow>
                         <DivRow>
-                            <label>Password</label>
+                            <Label>Password</Label>
                             <Input 
                                 type="password" 
                                 id="password"
@@ -78,7 +70,6 @@ class Login extends React.Component {
                     </CenterBlock>
                 </form>
             </DivContainer>
-        </div>
       )
     }
 }

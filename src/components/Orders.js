@@ -20,38 +20,58 @@ class Orders extends React.Component {
             <SC.DivContainer>
                 <SC.DivBlock>
                     <SC.DivRowHorizontal>
-                        <h1>Orders</h1>
+                        <SC.Title>Orders</SC.Title>
                     </SC.DivRowHorizontal>
                     <SC.ListContainer>
                     {
-                        orders && orders.length > 0 ? orders.map((order)=> 
-                            <SC.List key={order.id} vertical>
-                                <SC.ListSection flexGrow="1">
-                                    <SC.Text><b>{order.id}</b></SC.Text>
-                                    <SC.Text>${order.subTotal}</SC.Text>
-                                    <SC.Text>{order.Tip.name} ${order.subTotal * order.Tip.amount}</SC.Text>
-                                    <SC.Text>${order.total}</SC.Text>
-                                    <SC.Text>Cant Prod:{order.OrdersProducts.length}</SC.Text>
-                                </SC.ListSection>
-                                <h2>Products</h2>
+                        orders && orders.length > 0 ? orders.map((order)=> {
+                            return (
+                                
+                            <SC.List key={order.id}  flexDirection="column">
+                                <SC.DivRowHorizontal>
+                                    <SC.ListSection>ID</SC.ListSection>
+                                    <SC.ListSection>Subtotal</SC.ListSection>
+                                    <SC.ListSection>Tip</SC.ListSection>
+                                    <SC.ListSection>Total</SC.ListSection>
+                                </SC.DivRowHorizontal>
+                                <SC.DivRowHorizontal>
+                                    <SC.ListSection><SC.Text>{order.id}</SC.Text></SC.ListSection>
+                                    <SC.ListSection>${order.subTotal}</SC.ListSection>
+                                    <SC.ListSection><SC.Text>{order.Tip.name} ${parseFloat(order.subTotal * order.Tip.amount).toFixed(2)}</SC.Text></SC.ListSection>
+                                    <SC.ListSection>${order.total}</SC.ListSection>
+                                </SC.DivRowHorizontal>
+
                                 <SC.ListContainer>
+                                    <SC.List>
+                                        <SC.ListSection>Product</SC.ListSection>
+                                        <SC.ListSection>Cost</SC.ListSection>
+                                        <SC.ListSection>Quantity</SC.ListSection>
+                                        <SC.ListSection>Subtotal</SC.ListSection>
+                                    </SC.List>
+
                                     { 
-                                        order.OrdersProducts.map((product)=> {
-                                            if(!product.show)
-                                                product.show = 'none'
-                                            return (<SC.List key={order.id + product.id} vertical hide={product.show = ''}>
-                                                <SC.ListSection flexGrow="1">
+                                        order.OrdersProducts.map((product)=>
+                                            <SC.List key={order.id + product.id} vertical hide={product.show = ''}>
+                                                <SC.ListSection  flexDirection="column">
                                                     <img src={`http://localhost:3001/products/${product.Product.icon}`} alt={product.Product.name}/>
-                                                    <SC.Text><b>{product.Product.name}</b></SC.Text>
-                                                    <SC.Text>${product.Product.price}</SC.Text>
-                                                    <SC.Text>{product.quantity}</SC.Text>
-                                                    <SC.Text>${product.quantity * product.Product.price}</SC.Text>
+                                                    <SC.Text>{product.Product.name}</SC.Text>
                                                 </SC.ListSection>
-                                            </SC.List>)}
+                                                <SC.ListSection>
+                                                    <SC.Text>${product.Product.price}</SC.Text>
+                                                </SC.ListSection>
+                                                <SC.ListSection>
+                                                    <SC.Text>{product.quantity}</SC.Text>
+                                                </SC.ListSection>
+                                                <SC.ListSection>
+                                                    <SC.Text>${parseFloat(product.quantity * product.Product.price).toFixed(2)}</SC.Text>
+                                                </SC.ListSection>
+                                            </SC.List>
                                         )
                                     }
                                 </SC.ListContainer>
                             </SC.List>
+                            )
+                        }
                         ) : undefined
                     }
                     </SC.ListContainer>

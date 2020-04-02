@@ -8,6 +8,10 @@ class Products extends React.Component {
 
     componentDidMount = () => {
         this.props.dispatch(getProducts())
+        .catch((error) => {
+            if(error.message.includes("401") !== -1)
+                this.props.history.push('/')
+        })
     }
 
     removeProduct = (product) => {
@@ -22,29 +26,38 @@ class Products extends React.Component {
         return (
             <SC.DivContainer fllexDirection="column" fullWidth>
                 <SC.DivBlock>    
-                    <h1>Products</h1>
-                    <SC.ListContainer>
-                    {
-                        this.props.products && this.props.products.length > 0 ? this.props.products.map((product)=> 
-                            <SC.List key={product.id}>
-                                <SC.ListSection flexGrow="1">
-                                    <img src={`http://localhost:3001/products/${product.icon}`} alt={product.name}/>
-                                    <SC.Text><b>{product.name}</b></SC.Text>
-                                    <SC.Text>${product.price}</SC.Text>
-                                    <SC.ButtonBtn>
-                                        <Link to={`/admin/products/edit/${product.id}`}>Edit</Link>
-                                    </SC.ButtonBtn>
-                                    <SC.ButtonBtn onClick={() => this.removeProduct(product)}>
-                                        Remove
-                                    </SC.ButtonBtn>
-                                </SC.ListSection>
-                            </SC.List>
-                        ) : undefined
-                    }
-                    </SC.ListContainer>
+                    <SC.Title>Products</SC.Title>
                     <SC.DivRowHorizontal>
-                        <Link to="/admin">Menu</Link>
+                        <Link to="/admin" className="links"> &#60; Menu </Link>
                     </SC.DivRowHorizontal>
+                    <SC.ListContainer>
+                        <SC.List>
+                            <SC.ListSection width="33%">Product</SC.ListSection>
+                            <SC.ListSection width="33%">Cost</SC.ListSection>
+                            <SC.ListSection width="33%">&nbsp;</SC.ListSection>
+                        </SC.List>
+                        {
+                            this.props.products && this.props.products.length > 0 ? this.props.products.map((product)=> 
+                                <SC.List key={product.id}>
+                                    <SC.ListSection width="33%" flexDirection="column">
+                                        <SC.Img src={`http://localhost:3001/products/${product.icon}`} alt={product.name}/>
+                                        <SC.Text>{product.name}</SC.Text>
+                                    </SC.ListSection>
+                                    <SC.ListSection width="33%">   
+                                        <SC.Text>${product.price}</SC.Text>
+                                    </SC.ListSection>
+                                    <SC.ListSection width="33%">  
+                                        <SC.ButtonBtn>
+                                            <Link to={`/admin/products/edit/${product.id}`}>Edit</Link>
+                                        </SC.ButtonBtn>
+                                        <SC.ButtonBtn onClick={() => this.removeProduct(product)} color="#ff7272">
+                                            Remove
+                                        </SC.ButtonBtn>
+                                    </SC.ListSection>
+                                </SC.List>
+                            ) : undefined
+                        }
+                    </SC.ListContainer>
                     <SC.DivRowHorizontal>
                         <SC.ButtonBtn>
                             <Link to="/admin/products/create">Create</Link>

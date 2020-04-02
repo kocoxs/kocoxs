@@ -11,7 +11,7 @@ class Detail extends React.Component {
 
     finish = () => {
         this.props.dispatch (discardOrder())
-        this.props.history.push('/products')
+        this.props.history.push('/makeorder')
     }
 
     render(){
@@ -21,34 +21,36 @@ class Detail extends React.Component {
         return (
             <SC.DivContainer>
                 <SC.DivBlock>
-                    <h1>Detail</h1>
-                    <h2>Thank for drink here!</h2>
+                    <SC.Title>Detail</SC.Title>
+                    <SC.SubTitle>Thank for drink here!</SC.SubTitle>
                     <SC.ListContainer>
+                    <SC.List>
+                        <SC.ListSection>Product</SC.ListSection>
+                        <SC.ListSection>Cost</SC.ListSection>
+                        <SC.ListSection>Quantity</SC.ListSection>
+                        <SC.ListSection>Subtotal</SC.ListSection>
+                    </SC.List>
                     {
                         products && products.length > 0 ? products.map((product)=> {
                             subtotal = product.price * product.qty
                             return (
                             <SC.List key={product.id}>
-                                <SC.ListSection flexGrow="1">
+                                <SC.ListSection  flexDirection="column">
                                     <img src={`http://localhost:3001/products/${product.icon}`} alt={product.name}/>
+                                    <SC.Text>{product.name}</SC.Text>
                                 </SC.ListSection>
-                                <SC.ListSection  flexGrow="1" justifyContent="space-evenly">
-                                    <SC.Text><b>{product.name}</b></SC.Text>
-                                </SC.ListSection>
-                                <SC.ListSection  flexGrow="1" justifyContent="space-evenly">
+                                <SC.ListSection   justifyContent="space-evenly">
                                     <SC.Text>${product.price}</SC.Text>
                                 </SC.ListSection>
-                                <SC.ListSection  flexGrow="1" justifyContent="space-evenly">
-                                    <SC.Text flexGrow="3">Qty:{product.qty}</SC.Text>
+                                <SC.ListSection   justifyContent="space-evenly">
+                                    <SC.Text >{product.qty}</SC.Text>
                                 </SC.ListSection>
-                                <SC.ListSection flexGrow="1" justifyContent="space-evenly">
-                                    <label>Amount: ${subtotal} </label>
+                                <SC.ListSection  justifyContent="space-evenly">
+                                    <label>${subtotal}</label>
                                 </SC.ListSection> 
                             </SC.List>)
-                        }
-                        
-                    ) : undefined
-                }
+                        })    : undefined
+                    }
                     <SC.List>
                         <SC.ListSection flexGrow="1" justifyContent="flex-end">
                             SubTotal: ${order.subTotal}
@@ -56,7 +58,7 @@ class Detail extends React.Component {
                     </SC.List>
                     <SC.List>
                         <SC.ListSection flexGrow="1" justifyContent="flex-end">
-                            Tip: {order.Tip.name} { order.subTotal * order.Tip.amount }
+                            Tip: {order.Tip.name} { parseFloat(order.subTotal * order.Tip.amount).toFixed(2) }
                         </SC.ListSection>
                     </SC.List>
                     <SC.List>

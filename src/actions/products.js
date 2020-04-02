@@ -41,7 +41,7 @@ export function getProducts(){
         })
         .catch((error) => {
             dispatch(receiveProducts([]))
-            throw new Error('Error')
+            throw new Error(error)
         })
     }
 }

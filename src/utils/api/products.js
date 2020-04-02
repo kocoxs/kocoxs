@@ -5,7 +5,7 @@ export async function getAllProducts () {
         const response = await _api.get(`/product`)
         return response.data
     } catch (error) {
-        throw new Error('Datos invalidos') 
+        throw new Error(error) 
     }
 }
 
@@ -14,7 +14,7 @@ export async function removeProduct (product) {
         const response = await _api.delete(`/product/${product.id}`)
         return response.data
     } catch (error) {
-        throw new Error('Datos invalidos') 
+        throw new Error(error) 
     }
 }
 
