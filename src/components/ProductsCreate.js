@@ -1,7 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { ToastsContainer, ToastsStore } from 'react-toasts';
 import { createProduct, editProduct } from '../actions/products'
 import { Link } from "react-router-dom";
+import { deleteSeSion } from '../actions/users'
 import  * as SC  from './StyledComponents'
 
 class ProductsCreate extends React.Component {
@@ -42,16 +44,20 @@ class ProductsCreate extends React.Component {
                 if(typeof product.icon === 'string')
                     delete product.icon;
                 this.props.dispatch(editProduct(product))
-                alert("Editado con Exito")
+                ToastsStore.success("Editado con Exito")
                 this.props.history.push('/admin/products')
             } else {
                 this.props.dispatch(createProduct(this.state))
-                alert("Creado con Exito")
+                ToastsStore.success("Creado con Exito")
                 this.props.history.push('/admin/products')
             } 
         } catch (error) {
-            console.log(error)
-            alert("error")
+            if(error.message.includes("401") !== -1){
+                ToastsStore.error("Sesion Expired") 
+                setTimeout(() => this.props.dispatch(deleteSeSion()), 2000 )
+            } else{
+                ToastsStore.error(error) 
+            }   
         }
     }
 
@@ -124,6 +130,7 @@ class ProductsCreate extends React.Component {
                         </SC.ButtonBtn>
                     </SC.DivRowHorizontal>
                 </SC.DivBlock>
+                <ToastsContainer store={ToastsStore}/>
             </SC.DivContainer>
         )
     }

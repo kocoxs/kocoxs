@@ -66,6 +66,8 @@ export const DivRowHorizontal = styled.div`
     margin: 5px 0;
     justify-content: ${props => props.justifyContent || "flex-start"};
     align-items: center;
+    border-bottom: ${props => props.separator ? " solid 1px #e0e0e0" : "none"};
+    padding-bottom: ${props => props.separator ? " 5px" : "none"};
 `
 
 export const DivTitle = styled.div`

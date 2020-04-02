@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import  * as SC  from './StyledComponents'
 import { Link } from "react-router-dom";
 import { logout as actionLogOut } from '../actions/users'
+import  * as SC  from './StyledComponents'
 
 class Admin extends React.Component {
     

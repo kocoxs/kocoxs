@@ -30,7 +30,9 @@ class App extends Component {
             <Route exact path='/admin/products' component={Products} />
             <Route exact path='/admin/products/create' component={ProductsCreate} />
             <Route exact path='/admin/products/edit/:id' component={ProductsCreate} />
-            
+            <Route path="*">
+              <Redirect to={{ pathname: "/admin" }} />
+            </Route>
           </Router>
         )
       }else if(users.user.RolId == 2){
@@ -49,7 +51,11 @@ class App extends Component {
 
 
     }else{
-      return <Login />
+      return(
+        <Router>
+          <Login />
+        </Router>
+      ) 
     }
 
   }

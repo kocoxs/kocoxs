@@ -1,14 +1,15 @@
 import React from 'react'
-import { DivContainer, CenterBlock, DivRow, Input, ButtonBtn, Title, Label } from './StyledComponents'
 import { connect } from 'react-redux'
+import { ToastsContainer, ToastsStore } from 'react-toasts';
 import { login } from '../actions/users'
+
+import * as SC from './StyledComponents'
 
 
 class Login extends React.Component {
     state = {
         email: '',
-        password: '',
-        loggedIn: false
+        password: ''
     } 
     componentDidMount = () => { }
 
@@ -18,31 +19,32 @@ class Login extends React.Component {
         })
     }
 
-    handleSubmit = async (event) => {
+    handleSubmit = (event) => {
         event.preventDefault()
+        let that = this
         this.props.dispatch(login(this.state.email, this.state.password))
-        .then(() => {
-            
+        .then((user) => {
+        }) 
+        .catch((error)=> {
+            ToastsStore.error(error.message)
+            this.setState({
+                email: '',
+                password: ''
+            })
         })
-        .catch((error)=> console.log("ERROR: ", error))
     }
 
-    render() {    
-        if(this.props.users && this.props.users.user && this.props.users.user.Rol.id == 1)
-            this.props.history.push('/admin')
-        if(this.props.users && this.props.users.user && this.props.users.user.Rol.id == 2) 
-            this.props.history.push('/products')
-
+    render() {   
         return (
-            <DivContainer>
+            <SC.DivContainer>
                 <form onSubmit={this.handleSubmit}>
-                    <CenterBlock>
-                        <DivRow>
-                            <Title>Login</Title>
-                        </DivRow>
-                        <DivRow>
-                            <Label>Email</Label>
-                            <Input 
+                    <SC.CenterBlock>
+                        <SC.DivRow>
+                            <SC.Title>Login</SC.Title>
+                        </SC.DivRow>
+                        <SC.DivRow>
+                            <SC.Label>Email</SC.Label>
+                            <SC.Input 
                                 type="text" 
                                 id="email"
                                 name="email"
@@ -50,10 +52,10 @@ class Login extends React.Component {
                                 value={this.state.email}
                                 onChange={this.handleChange}
                             />
-                        </DivRow>
-                        <DivRow>
-                            <Label>Password</Label>
-                            <Input 
+                        </SC.DivRow>
+                        <SC.DivRow>
+                            <SC.Label>Password</SC.Label>
+                            <SC.Input 
                                 type="password" 
                                 id="password"
                                 name="password"
@@ -61,15 +63,16 @@ class Login extends React.Component {
                                 value={this.state.password}
                                 onChange={this.handleChange}
                             />
-                        </DivRow>
-                        <DivRow>
-                            <ButtonBtn type="submit">
+                        </SC.DivRow>
+                        <SC.DivRow>
+                            <SC.ButtonBtn type="submit">
                                 Login
-                            </ButtonBtn>
-                        </DivRow>
-                    </CenterBlock>
+                            </SC.ButtonBtn>
+                        </SC.DivRow>
+                    </SC.CenterBlock>
                 </form>
-            </DivContainer>
+                <ToastsContainer store={ToastsStore}/>
+            </SC.DivContainer>
       )
     }
 }

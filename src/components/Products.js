@@ -1,16 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { ToastsContainer, ToastsStore } from 'react-toasts';
 import { getProducts, deleteProduct } from '../actions/products'
 import { Link } from "react-router-dom";
+import { deleteSeSion } from '../actions/users'
 import  * as SC  from './StyledComponents'
 
 class Products extends React.Component {
 
     componentDidMount = () => {
         this.props.dispatch(getProducts())
-        .catch((error) => {
-            if(error.message.includes("401") !== -1)
-                this.props.history.push('/')
+        .catch((error) => { 
+            if(error.message.includes("401") !== -1){
+                ToastsStore.error("Sesion Expired") 
+                setTimeout(() => this.props.dispatch(deleteSeSion()), 2000 )
+            } else{
+                ToastsStore.error(error) 
+            }   
         })
     }
 
@@ -18,7 +24,12 @@ class Products extends React.Component {
         try {
             this.props.dispatch(deleteProduct(product))
         } catch (error) {
-            this.props.history.push('/')
+            if(error.message.includes("401") !== -1){
+                ToastsStore.error("Sesion Expired") 
+                setTimeout(() => this.props.dispatch(deleteSeSion()), 2000 )
+            } else{
+                ToastsStore.error(error) 
+            }   
         }
     }
 
@@ -64,6 +75,7 @@ class Products extends React.Component {
                         </SC.ButtonBtn>
                     </SC.DivRowHorizontal>
                 </SC.DivBlock>
+                <ToastsContainer store={ToastsStore}/>
             </SC.DivContainer>
         )
     }

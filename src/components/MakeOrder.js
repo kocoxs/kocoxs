@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getProducts } from '../actions/products'
+import { ToastsContainer, ToastsStore } from 'react-toasts';
+
+import { deleteSeSion } from '../actions/users'
 import { addProducToOrder, removeProducfromOrder, edditProducInOrder, discardOrder } from '../actions/order'
 import  * as SC  from './StyledComponents'
 
@@ -10,6 +13,14 @@ class MakeOrder extends React.Component {
 
     componentDidMount = async () =>{
         this.props.dispatch(getProducts())
+        .catch((error) => { 
+            if(error.message.includes("401") !== -1){
+                ToastsStore.error("Sesion Expired") 
+                setTimeout(() => this.props.dispatch(deleteSeSion()), 2000 )
+            } else{
+                ToastsStore.error(error) 
+            }   
+        })
     }
 
     handleChange = (event) => {
@@ -187,6 +198,7 @@ class MakeOrder extends React.Component {
                     </SC.List>
                 </SC.ListContainer>
             </SC.DivBlock>
+            <ToastsContainer store={ToastsStore}/>
         </SC.DivContainer>
       )
     }

@@ -1,7 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { ToastsContainer, ToastsStore } from 'react-toasts';
 import { loadTips } from '../actions/tips'
 import { setTip, savingOrder } from '../actions/order'
+import { deleteSeSion } from '../actions/users'
 import  * as SC  from './StyledComponents'
 
 class Tip extends React.Component {
@@ -12,6 +14,15 @@ class Tip extends React.Component {
 
     componentDidMount = () => {
         this.props.dispatch(loadTips())
+        .catch((error) => { 
+            if(error.message.includes("401") !== -1){
+                ToastsStore.error("Sesion Expired") 
+                setTimeout(() => this.props.dispatch(deleteSeSion()), 2000 )
+            } else{
+                ToastsStore.error(error) 
+            }   
+            
+        })
     }
 
     selectTip = (tip) => {
@@ -53,6 +64,7 @@ class Tip extends React.Component {
                     }
                      
                 </SC.CenterBlock>
+                <ToastsContainer store={ToastsStore}/>
             </SC.DivContainer>
         )
     }
