@@ -1,7 +1,9 @@
-import { apiGetAllOrder } from '../utils/api/order'
+
 
 export const RECIVE_ORDERS = 'RECIVE_ORDERS'
 export const SHOW_ORDERS = 'SHOW_ORDERS'
+export const SAGA_RECIVE_ORDER = 'SAGA_RECIVE_ORDER'
+export const SAGA_TOOGLE = 'SAGA_TOOGLE'
 
 export function reciveOrders (orders) {
     return {
@@ -18,14 +20,14 @@ export function showOrders (order) {
 }
 
 export function getOrders(){
-    return (dispatch) => {
-        return apiGetAllOrder()
-        .then(({orders})=>{
-            dispatch(reciveOrders(orders))
-        })
+    return{
+        type: SAGA_RECIVE_ORDER
     }
 }
 
 export function toggleShow(order){
-    return (dispatch) => dispatch(showOrders(order))
+    return {
+        type:SAGA_TOOGLE,
+        order
+    }
 }

@@ -14,14 +14,14 @@ class Orders extends React.Component {
 
     componentDidMount = () => {
         this.props.dispatch(getOrders())
-        .catch((error) => { 
-            if(error.message.includes("401") !== -1){
-                ToastsStore.error("Sesion Expired") 
-                setTimeout(() => this.props.dispatch(deleteSeSion()), 2000 )
-            } else{
-                ToastsStore.error(error) 
-            }   
-        })
+        // .catch((error) => { 
+        //     if(error.message.includes("401") !== -1){
+        //         ToastsStore.error("Sesion Expired") 
+        //         setTimeout(() => this.props.dispatch(deleteSeSion()), 2000 )
+        //     } else{
+        //         ToastsStore.error(error) 
+        //     }   
+        // })
     }
 
     showProduct = (order) => {

@@ -34,8 +34,6 @@ export function login(email, password){
             password
         }
     }
-
-    
 }
 
 export function logout(){
