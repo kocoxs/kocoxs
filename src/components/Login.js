@@ -23,15 +23,15 @@ class Login extends React.Component {
         event.preventDefault()
         let that = this
         this.props.dispatch(login(this.state.email, this.state.password))
-        .then((user) => {
-        }) 
-        .catch((error)=> {
-            ToastsStore.error(error.message)
-            this.setState({
-                email: '',
-                password: ''
-            })
-        })
+        // .then((user) => {
+        // }) 
+        // .catch((error)=> {
+        //     ToastsStore.error(error.message)
+        //     this.setState({
+        //         email: '',
+        //         password: ''
+        //     })
+        // })
     }
 
     render() {   
