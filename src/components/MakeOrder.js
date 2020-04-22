@@ -4,7 +4,7 @@ import { getProducts } from '../actions/products'
 import { ToastsContainer, ToastsStore } from 'react-toasts';
 
 import { deleteSeSion } from '../actions/users'
-import { addProducToOrder, removeProducfromOrder, edditProducInOrder, discardOrder } from '../actions/order'
+import { addProducToOrder, removeProducfromOrder, editProducInOrder, discardOrder } from '../actions/order'
 import  * as SC  from './StyledComponents'
 
 class MakeOrder extends React.Component {
@@ -50,7 +50,7 @@ class MakeOrder extends React.Component {
         if(isNaN(qty))
             return alert("Ingresa un Numero")
 
-        this.props.dispatch (edditProducInOrder({
+        this.props.dispatch (editProducInOrder({
             ...product,
             qty
         }))
@@ -150,7 +150,7 @@ class MakeOrder extends React.Component {
                                         <SC.Text>{product.qty}</SC.Text>
                                     </SC.ListSection>
                                     <SC.ListSection >
-                                        <SC.Text>${ product.price * product.qty }</SC.Text> 
+                                        <SC.Text>${ parseFloat(product.price * product.qty).toFixed(2)}</SC.Text> 
                                     </SC.ListSection>
                                 </SC.DivRowHorizontal>
                                 <SC.DivRowHorizontal>
@@ -193,7 +193,7 @@ class MakeOrder extends React.Component {
                                     Finish
                                 </SC.ButtonBtn>
                             }
-                            <SC.Text>Total: ${total}</SC.Text>
+                            <SC.Text>Total: ${parseFloat(total).toFixed(2)}</SC.Text>
                         </SC.ListSection>
                     </SC.List>
                 </SC.ListContainer>

@@ -7,12 +7,12 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 import { PersistGate } from 'redux-persist/integration/react'
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 import createSagaMiddleware from 'redux-saga'
-import rootSaga from './sagas'
 
+import rootSaga from './sagas'
 import './index.css'
 import App from './components/App'
 import rootReducer from './reducers'
-import middleware from './middleware'
+import logger from './middleware/logger'
 
 
 const persistConfig = {
@@ -25,7 +25,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const sagaMiddleware = createSagaMiddleware()
 
-const store = createStore(persistedReducer, applyMiddleware(sagaMiddleware))
+const store = createStore(persistedReducer, applyMiddleware(sagaMiddleware, logger))
 
 sagaMiddleware.run(rootSaga)
 

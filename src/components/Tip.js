@@ -14,15 +14,15 @@ class Tip extends React.Component {
 
     componentDidMount = () => {
         this.props.dispatch(loadTips())
-        .catch((error) => { 
-            if(error.message.includes("401") !== -1){
-                ToastsStore.error("Sesion Expired") 
-                setTimeout(() => this.props.dispatch(deleteSeSion()), 2000 )
-            } else{
-                ToastsStore.error(error) 
-            }   
+        // .catch((error) => { 
+        //     if(error.message.includes("401") !== -1){
+        //         ToastsStore.error("Sesion Expired") 
+        //         setTimeout(() => this.props.dispatch(deleteSeSion()), 2000 )
+        //     } else{
+        //         ToastsStore.error(error) 
+        //     }   
             
-        })
+        // })
     }
 
     selectTip = (tip) => {

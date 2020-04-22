@@ -1,6 +1,5 @@
-import apiGetTips from '../utils/api/tips'
-
 export const LOAD_TIPS = 'LOAD_TIPS'
+export const SAGAS_TIPS = 'SAGAS_TIPS'
 
 export function getTips(tips){
     return {
@@ -10,10 +9,7 @@ export function getTips(tips){
 }
 
 export function loadTips(){
-    return (dispatch) => {
-        return apiGetTips()
-        .then(({tips})=>{
-            dispatch(getTips(tips))
-        })
+    return{
+        type: SAGAS_TIPS
     }
 }

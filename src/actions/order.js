@@ -1,11 +1,16 @@
-import { createOrder } from '../utils/api/order'
-
 export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 export const EDIT_PRODUCT = 'EDIT_PRODUCT'
 export const DISCARD_ORDER = 'DISCARD_ORDER'
 export const ASIGN_TIP = 'ASIGN_TIP'
 export const SAVE_ORDER = 'SAVE_ORDER'
+
+export const SAGA_PRODUCT_TO_ORDER = 'SAGA_PRODUCT_TO_ORDER'
+export const SAGA_REMOVE_PRODUCT_FROM_ORDER = 'SAGA_REMOVE_PRODUCT_FROM_ORDER'
+export const SAGA_EDIT_PRODUCT_IN_ORDER = 'SAGA_EDIT_PRODUCT_IN_ORDER'
+export const SAGA_DISCARD_ORDER = 'SAGA_DISCARD_ORDER'
+export const SAGA_TIP = 'SAGA_TIP'
+export const SAGA_SAVING_ORDER = 'SAGA_SAVING_ORDER'
 
 export function addProduct (order) {
     return {
@@ -50,40 +55,49 @@ export function saveOrder(order){
 }
 
 export function addProducToOrder(product){
-    return (dispatch) => {
-        return dispatch(addProduct({
-            product
-        }))
+    return {
+        type:SAGA_PRODUCT_TO_ORDER,
+        product
     }
+    
 }
 
 export function removeProducfromOrder(product){
-    return (dispatch) => {
-        return dispatch(removeProduct({product}))
+    return {
+        type:SAGA_REMOVE_PRODUCT_FROM_ORDER,
+        product
     }
+    
 }
 
-export function edditProducInOrder(product){
-    return (dispatch) => {
-        return dispatch(editProduct({product}))
+export function editProducInOrder(product){
+    return {
+        type:SAGA_EDIT_PRODUCT_IN_ORDER,
+        product
     }
+    
 }
 
 export function discardOrder(){
-    return (dispatch) => {
-        return dispatch(discard())
+    return {
+        type:SAGA_DISCARD_ORDER,
+
     }
+    
 }
 
 export function setTip(tip){
-    return (dispatch) => {
-        return dispatch(asignTip(tip))
+    return {
+        type:SAGA_TIP,
+        tip
     }
+    
 }
 
 export function savingOrder(order){
-    return (dispatch) => {
-        return createOrder(order)
-        .then(({result}) => dispatch(saveOrder(result)))
+    return {
+        type:SAGA_SAVING_ORDER,
+        order
     }
+    
 }

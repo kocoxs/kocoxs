@@ -58,7 +58,7 @@ class Detail extends React.Component {
                     </SC.List>
                     <SC.List>
                         <SC.ListSection flexGrow="1" justifyContent="flex-end">
-                            Tip: {order.Tip.name} { parseFloat(order.subTotal * order.Tip.amount).toFixed(2) }
+                            Tip: {order.Tip && order.Tip.name } { order.Tip && parseFloat(order.subTotal * order.Tip.amount).toFixed(2) }
                         </SC.ListSection>
                     </SC.List>
                     <SC.List>
