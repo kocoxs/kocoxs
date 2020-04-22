@@ -5,7 +5,6 @@ import { GET_PRODUCTS, RECIVE_PRODUCTS } from '../actions/products'
 export function* getProducts() {
     try {
         const { products } = yield call(getAllProducts)
-        console.log("LAMANDO a los productos:", products);
         yield put({type: RECIVE_PRODUCTS, products});
     } catch (error) {
         yield put({type: RECIVE_PRODUCTS, products: []});
