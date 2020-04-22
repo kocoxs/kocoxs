@@ -11,9 +11,7 @@ import { login as apiLogin, logout as apiLogout } from '../utils/api/users'
 
 export function* login({user}){
     try {
-        console.log("USER:",user);
-        debugger;
-        const data = yield call(apiLogin, {...user})
+        const data = yield call(apiLogin, user)
         yield put( loginUser(data));
     } catch (error) {
         
@@ -22,7 +20,6 @@ export function* login({user}){
 
 export function* logout(){
     try {
-        console.log("AQUI Borro")
         yield call(apiLogout)
         yield put( logoutUser());
     } catch (error) {

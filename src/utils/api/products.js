@@ -20,6 +20,7 @@ export async function removeProduct (product) {
 
 
 export async function createProduct (product) {
+    
     try {
         
         let formData = new FormData()
@@ -35,7 +36,7 @@ export async function createProduct (product) {
         })
         return response.data
     } catch (error) {
-        throw new Error('Datos invalidos') 
+        throw new Error(error) 
     }
 }
 

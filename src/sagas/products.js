@@ -29,8 +29,8 @@ export function* getProducts() {
 
 export function* deleteProduct({product}){
     try {
-        const { product } = yield call(removeProduct, product)
-        yield put( deleteProducts(product));
+        const response = yield call(removeProduct, product)
+        yield put( deleteProducts(response.product));
     } catch (error) {
         
     }
@@ -38,8 +38,8 @@ export function* deleteProduct({product}){
 
 export function* createProduct({product}){
     try {
-        const { product } = yield call(apiCreateProduct, product)
-        yield put( addProduct(product));
+        const response = yield call(apiCreateProduct, product)
+        yield put( addProduct(response.product));
     } catch (error) {
         
     }
@@ -47,8 +47,8 @@ export function* createProduct({product}){
 
 export function* editProduct({product}){
     try {
-        const { product } = yield call(apiEditProduct, product)
-        yield put( modifyProduct(product));
+        const response = yield call(apiEditProduct, product)
+        yield put( modifyProduct(response.product));
     } catch (error) {
         
     }
