@@ -1,23 +1,80 @@
 import { call, put, takeEvery, all} from 'redux-saga/effects';
-import  { getAllProducts } from '../utils/api/products'
-import { GET_PRODUCTS, RECIVE_PRODUCTS } from '../actions/products'
+
+import  {
+    getAllProducts, 
+    removeProduct, 
+    createProduct as apiCreateProduct, 
+    editProduct as apiEditProduct
+} from '../utils/api/products'
+
+import { 
+    GET_PRODUCTS, 
+    receiveProducts, 
+    SAGAS_DELETE_PRODUCT, 
+    deleteProducts,
+    SAGAS_CREATE_PRODUCT,
+    addProduct,
+    SAGAS_EDIT_PRODUCT,
+    modifyProduct 
+} from '../actions/products'
 
 export function* getProducts() {
     try {
         const { products } = yield call(getAllProducts)
-        yield put({type: RECIVE_PRODUCTS, products});
+        yield put( receiveProducts(products));
     } catch (error) {
-        yield put({type: RECIVE_PRODUCTS, products: []});
+        yield put(receiveProducts([]));
     }
-    yield put({ type: 'INCREMENT' })
+}
+
+export function* deleteProduct({product}){
+    try {
+        const { product } = yield call(removeProduct, product)
+        yield put( deleteProducts(product));
+    } catch (error) {
+        
+    }
+}
+
+export function* createProduct({product}){
+    try {
+        const { product } = yield call(apiCreateProduct, product)
+        yield put( addProduct(product));
+    } catch (error) {
+        
+    }
+}
+
+export function* editProduct({product}){
+    try {
+        const { product } = yield call(apiEditProduct, product)
+        yield put( modifyProduct(product));
+    } catch (error) {
+        
+    }
 }
 
 function* watchGetProducts() {
     yield takeEvery(GET_PRODUCTS, getProducts)
 }
 
+function* watchDeleteProduct() {
+    yield takeEvery(SAGAS_DELETE_PRODUCT, deleteProduct)
+}
+
+function* watchCreateProduct() {
+    yield takeEvery(SAGAS_CREATE_PRODUCT, createProduct)
+}
+
+function* watchEditProduct() {
+    yield takeEvery(SAGAS_EDIT_PRODUCT, editProduct)
+}
+
 export function* productSuscriber() {
     yield all( [
-        watchGetProducts()
+        watchGetProducts(),
+        watchDeleteProduct(),
+        watchCreateProduct(),
+        watchEditProduct()
     ])
 }

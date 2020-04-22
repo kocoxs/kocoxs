@@ -12,19 +12,15 @@ class MakeOrder extends React.Component {
     }
 
     componentDidMount = async () =>{
-        
-        this.props.dispatch({type: "GET_PRODUCTS"});
-        debugger;
-        
-        /*this.props.dispatch(getProducts())
-        .catch((error) => { 
-            if(error.message.includes("401") !== -1){
-                ToastsStore.error("Sesion Expired") 
-                setTimeout(() => this.props.dispatch(deleteSeSion()), 2000 )
-            } else{
-                ToastsStore.error(error) 
-            }   
-        })*/
+        this.props.dispatch(getProducts())
+        // .catch((error) => { 
+        //     if(error.message.includes("401") !== -1){
+        //         ToastsStore.error("Sesion Expired") 
+        //         setTimeout(() => this.props.dispatch(deleteSeSion()), 2000 )
+        //     } else{
+        //         ToastsStore.error(error) 
+        //     }   
+        // })
     }
 
     handleChange = (event) => {
